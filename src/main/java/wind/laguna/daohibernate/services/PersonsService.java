@@ -1,5 +1,6 @@
 package wind.laguna.daohibernate.services;
 
+import jakarta.transaction.Transactional;
 import lombok.Getter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -7,9 +8,11 @@ import wind.laguna.daohibernate.models.Persons;
 import wind.laguna.daohibernate.repositories.PersonsRepository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Getter
 @Service
+@Transactional
 public class PersonsService {
     private final PersonsRepository personsRepository;
 
@@ -18,9 +21,20 @@ public class PersonsService {
         this.personsRepository = personsRepository;
     }
 
-    String sql = "SELECT p FROM Persons p WHERE p.cityOfLiving = :city";
+    public List<Persons> findAll() {
+        return personsRepository.findAll();
+    }
 
-    public List<Persons> getPersonsByCity(String city) {
-        return personsRepository.findByCity(city, sql);
+    public List<Persons> findByCity(String city) {
+        return personsRepository.findAllByCityOfLiving(city);
+    }
+
+    public List<Persons> findByAge(int age) {
+        return personsRepository.findAllByAgeBeforeOrderByAgeAsc(age);
+    }
+
+    public Persons findByFio(String name, String surname) {
+        Optional<Persons> findPerson = Optional.ofNullable(personsRepository.findByNameAndSurname(name, surname));
+        return findPerson.orElse(null);
     }
 }

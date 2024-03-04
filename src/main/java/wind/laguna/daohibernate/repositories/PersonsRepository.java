@@ -1,18 +1,18 @@
 package wind.laguna.daohibernate.repositories;
 
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.PersistenceContext;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 import wind.laguna.daohibernate.models.Persons;
+import wind.laguna.daohibernate.models.PersonsKey;
 
 import java.util.List;
 
 @Repository
-public class PersonsRepository {
-    @PersistenceContext
-    private EntityManager entityManager;
+public interface PersonsRepository extends JpaRepository<Persons, PersonsKey> {
 
-    public List<Persons> findByCity(String city, String sql) {
-        return entityManager.createQuery(sql, Persons.class).setParameter("city", city).getResultList();
-    }
+    List<Persons> findAllByCityOfLiving(String city);
+
+    List<Persons> findAllByAgeBeforeOrderByAgeAsc(int age);
+
+    Persons findByNameAndSurname(String name, String surname);
 }

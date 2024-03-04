@@ -18,8 +18,23 @@ import java.util.List;
 public class PersonsController {
     private PersonsService personsService;
 
+    @GetMapping
+    public List<Persons> showAll() {
+        return personsService.findAll();
+    }
+
     @GetMapping("/by-city")
     public List<Persons> showPersonsByCity(@RequestParam String city) {
-        return personsService.getPersonsByCity(city);
+        return personsService.findByCity(city);
+    }
+
+    @GetMapping("/by-age")
+    public List<Persons> showPersonsByAge(@RequestParam int age) {
+        return personsService.findByAge(age);
+    }
+
+    @GetMapping("/by-fio")
+    public Persons showByFio(@RequestParam String name, String surname) {
+        return personsService.findByFio(name, surname);
     }
 }
