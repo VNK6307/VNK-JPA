@@ -13,7 +13,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/persons")
-@Transactional
 @AllArgsConstructor
 public class PersonsController {
     private PersonsService personsService;

@@ -16,7 +16,6 @@ import java.util.Optional;
 public class PersonsService {
     private final PersonsRepository personsRepository;
 
-    @Autowired
     public PersonsService(PersonsRepository personsRepository) {
         this.personsRepository = personsRepository;
     }
